@@ -1,0 +1,24 @@
+- name: Grow PVs
+  become: yes
+  script: "grow_pv.sh"
+  args:
+    executable: bash
+  register: a
+  changed_when: '"NOCHANGE" not in a.stdout'
+- debug:
+    msg: "{{ a.stdout_lines }}"
+
+# E.g.: grow_lvm.sh "/var" "+100%FREE"
+- name: Grow LVs
+  become: yes
+  script: "grow_lv.sh {{ mountpoint.key | quote }} {{ mountpoint.value | quote }}"
+  args:
+    executable: bash
+  changed_when: '"Nothing to do!" not in a.stdout'
+  with_dict: "{{ lvmap }}"
+  loop_control:
+    loop_var: mountpoint
+    label: "{{ mountpoint.key | quote }} - {{ mountpoint.value | quote }}"
+  register: a
+- debug:
+    msg: "{{ a.results | map(attribute='stdout_lines')| flatten | list }}"
