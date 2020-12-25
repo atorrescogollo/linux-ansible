@@ -3,4 +3,4 @@ Installs Docker Engine
 > **NOTE**: Only Ubuntu and Debian are supported
 
 ## Action Variables
-This action do not require any action variable.
+This action does not require any action variable.

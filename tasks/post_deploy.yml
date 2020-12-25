@@ -1,0 +1,18 @@
+- name: Assert params
+  assert:
+    that:
+    - lvmap is defined
+  tags:
+  - always
+
+- name: Call grow_lvm
+  include_tasks:
+    file: "grow_lvm.yml"
+
+- name: Call setup_hostname
+  include_tasks:
+    file: "setup_hostname.yml"
+
+- name: Reboot the machine
+  become: yes
+  reboot:

@@ -1,3 +1,10 @@
+- name: Assert params
+  assert:
+    that:
+    - lvmap is defined
+  tags:
+  - always
+
 - name: Grow PVs
   become: yes
   script: "grow_pv.sh"

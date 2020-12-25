@@ -1,3 +1,5 @@
 role_actions:
 - grow_lvm
 - install_docker
+- setup_hostname
+- post_deploy
