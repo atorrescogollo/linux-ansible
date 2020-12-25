@@ -3,3 +3,4 @@ role_actions:
 - install_docker
 - setup_hostname
 - post_deploy
+- upgrade_packages

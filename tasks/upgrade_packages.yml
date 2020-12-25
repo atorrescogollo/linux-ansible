@@ -1,0 +1,23 @@
+- fail:
+    msg: "Only Ubuntu and Debian are supported"
+  when: ansible_distribution not in ["Ubuntu","Debian"]
+  tags:
+  - always
+
+- name: Update all packages to their latest version
+  become: yes
+  apt:
+    name: "*"
+    state: latest
+    update_cache: yes
+
+- name: Install specified packages
+  become: yes
+  apt:
+    pkg: "{{install_packages}}"
+  when: install_packages is defined
+
+- name: Upgrade the OS (apt-get dist-upgrade)
+  become: yes
+  apt:
+    upgrade: dist

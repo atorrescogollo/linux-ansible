@@ -1,9 +1,19 @@
+- fail:
+    msg: "Only Ubuntu and Debian are supported"
+  when: ansible_distribution not in ["Ubuntu","Debian"]
+  tags:
+  - always
+
 - name: Assert params
   assert:
     that:
     - lvmap is defined
   tags:
   - always
+
+- name: Call upgrade_packages
+  include_tasks:
+    file: "upgrade_packages.yml"
 
 - name: Call grow_lvm
   include_tasks:
