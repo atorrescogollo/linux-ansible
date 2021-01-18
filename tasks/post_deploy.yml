@@ -4,12 +4,9 @@
   tags:
   - always
 
-- name: Assert params
-  assert:
-    that:
-    - lvmap is defined
-  tags:
-  - always
+- name: Call setup_hostname
+  include_tasks:
+    file: "setup_hostname.yml"
 
 - name: Call upgrade_packages
   include_tasks:
@@ -18,10 +15,8 @@
 - name: Call grow_lvm
   include_tasks:
     file: "grow_lvm.yml"
+  when: lvmap is defined
 
-- name: Call setup_hostname
-  include_tasks:
-    file: "setup_hostname.yml"
 
 - name: Reboot the machine
   become: yes

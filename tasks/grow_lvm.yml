@@ -22,6 +22,7 @@
   args:
     executable: bash
   changed_when: '"Nothing to do!" not in a.stdout'
+  ignore_errors: "{{ lvmap_ignore_errors }}"
   with_dict: "{{ lvmap }}"
   loop_control:
     loop_var: mountpoint

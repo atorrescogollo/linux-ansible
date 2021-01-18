@@ -10,6 +10,7 @@ This action groups other actions needed when a new machine is deployed:
 ## Action Variables
 Using this action, you will be able to set the following variables:
 - `lvmap`: LVM map with desired sizes. Note: size will be allocated iteratively so last partition may always be `+100%FREE`.
+- `lvmap_ignore_errors`: Ignore errors when extending logical volumes. Default: no.
 - `install_packages`: Extra packages you want to be installed.
 
 ## Example:
