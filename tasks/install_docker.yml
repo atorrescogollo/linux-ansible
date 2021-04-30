@@ -38,3 +38,28 @@
     - docker-ce-cli
     - containerd.io
     update_cache: yes
+
+- block:
+  - name: Get latest version of docker-compose
+    uri:
+      url: https://api.github.com/repos/docker/compose/releases/latest
+    delegate_to: localhost
+    register: docker_compose_releases
+  - set_fact:
+      docker_compose_version: "{{docker_compose_releases.json.tag_name}}"
+  when: docker_compose_version=="latest"
+
+- name: "Get docker-compose v{{ docker_compose_version }} checksum"
+  uri:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}.sha256
+    return_content: yes
+  register: docker_compose_checksum
+
+- name: "Install docker-compose v{{ docker_compose_version }}"
+  get_url:
+    url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
+    dest: /usr/local/bin/docker-compose
+    mode: '0755'
+    owner: root
+    group: root
+    checksum: 'sha256:{{ docker_compose_checksum.content.split(" ")[0] }}'
