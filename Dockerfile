@@ -9,6 +9,6 @@ RUN apt-get update \
     && rm -rf /var/lib/apt/lists/* \
     && mkdir -p /root/.ansible/roles/ \
     && ln -sf /linux-ansible /root/.ansible/roles/linux-ansible \
-    && pip3 install -r /linux-ansible/requirements.txt
+    && pip3 install --no-cache-dir -r /linux-ansible/requirements.txt
 
 ENTRYPOINT ["ansible-playbook","-i","/inventory","/playbook.yml"]
