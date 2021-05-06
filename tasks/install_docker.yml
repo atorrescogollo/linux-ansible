@@ -56,6 +56,7 @@
   register: docker_compose_checksum
 
 - name: "Install docker-compose v{{ docker_compose_version }}"
+  become: yes
   get_url:
     url: https://github.com/docker/compose/releases/download/{{ docker_compose_version }}/docker-compose-{{ ansible_system }}-{{ ansible_architecture }}
     dest: /usr/local/bin/docker-compose
